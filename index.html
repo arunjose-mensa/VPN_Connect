@@ -34,6 +34,8 @@
             --radius: 12px;
             --radius-lg: 16px;
             --radius-full: 9999px;
+            --code-bg: #1e293b;
+            --code-text: #e2e8f0;
         }
 
         body {
@@ -110,6 +112,7 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 24px 32px 0;
+            overflow-x: auto;
         }
 
         .nav-tabs {
@@ -120,6 +123,7 @@
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow);
             width: fit-content;
+            min-width: max-content;
         }
 
         .nav-tab {
@@ -202,6 +206,23 @@
             padding: 20px 24px;
             border-radius: var(--radius);
             margin-bottom: 32px;
+        }
+        
+        .alert-box.danger {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-color: #f87171;
+        }
+
+        .alert-box.danger .alert-icon {
+            background: #ef4444;
+        }
+        
+        .alert-box.danger .alert-content strong {
+            color: #7f1d1d;
+        }
+        
+        .alert-box.danger .alert-content p {
+            color: #991b1b;
         }
 
         .alert-icon {
@@ -319,6 +340,67 @@
 
         .step-content strong {
             color: var(--text-primary);
+        }
+        
+        /* Code Blocks & Tables for Technical Guides */
+        .code-block {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.875rem;
+            overflow-x: auto;
+            margin: 16px 0;
+            border: 1px solid #334155;
+            position: relative;
+        }
+        
+        .code-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: #334155;
+            color: #94a3b8;
+            font-size: 0.7rem;
+            padding: 4px 10px;
+            border-bottom-left-radius: 8px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .tech-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.9375rem;
+        }
+
+        .tech-table th {
+            text-align: left;
+            padding: 12px;
+            color: var(--text-secondary);
+            border-bottom: 2px solid var(--border);
+            font-weight: 600;
+        }
+
+        .tech-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        .tech-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .tech-prop {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            color: var(--primary-dark);
+            background: var(--surface-variant);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85em;
         }
 
         /* Buttons */
@@ -718,6 +800,10 @@
                 <span class="material-icons-outlined">mail</span>
                 Rediffmail Setup
             </button>
+            <button class="nav-tab" onclick="showTab('wazuh')">
+                <span class="material-icons-outlined">security</span>
+                Wazuh Integration
+            </button>
         </nav>
     </div>
 
@@ -1061,6 +1147,371 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- Wazuh Tab Content -->
+        <div id="wazuh-tab" class="tab-content">
+            <div class="page-header">
+                <h1 class="page-title">Sophos Firewall Integration with Wazuh</h1>
+                <p class="page-description">A complete technical guide for integrating Sophos XG/XGS Firewall logs with Wazuh SIEM via syslog.</p>
+            </div>
+
+            <div class="settings-grid">
+                <div class="settings-card" style="grid-column: 1 / -1;">
+                    <div class="settings-card-header">
+                        <span class="material-icons-outlined">settings_input_component</span>
+                        <h3>Component Details</h3>
+                    </div>
+                    <div class="settings-card-body">
+                        <div class="settings-grid" style="margin-bottom: 0;">
+                            <div>
+                                <table class="tech-table">
+                                    <tr>
+                                        <th>Component</th>
+                                        <th>Details</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Sophos Model</td>
+                                        <td><span class="tech-prop">XGS3100</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sophos IP</td>
+                                        <td><span class="tech-prop">172.168.10.1</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Wazuh Version</td>
+                                        <td>4.14.2 (Docker)</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div>
+                                <table class="tech-table">
+                                    <tr>
+                                        <th>Protocol</th>
+                                        <th>Details</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Type</td>
+                                        <td><span class="tech-prop">UDP Syslog</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Port</td>
+                                        <td><span class="tech-prop">15514</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Severity</td>
+                                        <td>Information</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setup-instructions">
+                <h3>
+                    <span class="material-icons-outlined">playlist_add_check</span>
+                    Quick Setup Checklist
+                </h3>
+                <div class="instruction-list">
+                    <div class="instruction-item">
+                        <span class="instruction-number">1</span>
+                        <p class="instruction-text">Configure Sophos syslog output to Wazuh server</p>
+                    </div>
+                    <div class="instruction-item">
+                        <span class="instruction-number">2</span>
+                        <p class="instruction-text">Open UDP port <strong>15514</strong> on host firewall</p>
+                    </div>
+                    <div class="instruction-item">
+                        <span class="instruction-number">3</span>
+                        <p class="instruction-text">Add <strong>&lt;remote&gt;</strong> syslog block to <code>ossec.conf</code></p>
+                    </div>
+                    <div class="instruction-item">
+                        <span class="instruction-number">4</span>
+                        <p class="instruction-text">Create custom <strong>Sophos decoder</strong> and <strong>rules</strong></p>
+                    </div>
+                    <div class="instruction-item">
+                        <span class="instruction-number">5</span>
+                        <p class="instruction-text">Add decoder/rule directories to <code>ossec.conf</code> (Critical Step)</p>
+                    </div>
+                    <div class="instruction-item">
+                        <span class="instruction-number">6</span>
+                        <p class="instruction-text">Restart Wazuh Manager</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="steps-container" style="margin-top: 32px;">
+                <div class="step">
+                    <div class="step-header">
+                        <div class="step-number">1</div>
+                        <h2 class="step-title">Sophos Firewall Configuration</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Navigate to <strong>System → Syslog</strong> and configure the following:</p>
+                        <table class="tech-table">
+                            <tr>
+                                <td>Syslog Server IP</td>
+                                <td><span class="tech-prop">172.16.3.200</span> (Wazuh Host)</td>
+                            </tr>
+                            <tr>
+                                <td>Port</td>
+                                <td><span class="tech-prop">15514</span></td>
+                            </tr>
+                            <tr>
+                                <td>Facility</td>
+                                <td><span class="tech-prop">LOCAL0</span></td>
+                            </tr>
+                            <tr>
+                                <td>Severity</td>
+                                <td><span class="tech-prop">Information</span></td>
+                            </tr>
+                            <tr>
+                                <td>Protocol</td>
+                                <td><span class="tech-prop">UDP</span></td>
+                            </tr>
+                        </table>
+                        <div class="alert-box">
+                            <div class="alert-icon">
+                                <span class="material-icons-outlined">lightbulb</span>
+                            </div>
+                            <div class="alert-content">
+                                <strong>Tip</strong>
+                                <p>Use a non-standard port (15514 instead of 514) to avoid conflicts with other syslog services running on the server.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-header">
+                        <div class="step-number">2</div>
+                        <h2 class="step-title">Wazuh Manager Configuration</h2>
+                    </div>
+                    <div class="step-content">
+                        <p><strong>2.1 Configure Syslog Remote in ossec.conf</strong></p>
+                        <p>Add this block inside the <code>&lt;ossec_config&gt;</code> tag:</p>
+                        <div class="code-block">
+                            <span class="code-badge">XML</span>
+<pre><code>&lt;remote&gt;
+  &lt;connection&gt;syslog&lt;/connection&gt;
+  &lt;port&gt;15514&lt;/port&gt;
+  &lt;protocol&gt;udp&lt;/protocol&gt;
+  &lt;allowed-ips&gt;172.168.10.1&lt;/allowed-ips&gt;
+  &lt;local_ip&gt;0.0.0.0&lt;/local_ip&gt;
+&lt;/remote&gt;</code></pre>
+                        </div>
+                        
+                        <div class="alert-box danger">
+                            <div class="alert-icon">
+                                <span class="material-icons-outlined">warning</span>
+                            </div>
+                            <div class="alert-content">
+                                <strong>CAUTION</strong>
+                                <p>The <code>&lt;allowed-ips&gt;</code> tag is <strong>REQUIRED</strong>. If omitted, Wazuh will disable the syslog listener entirely.</p>
+                            </div>
+                        </div>
+
+                        <p><strong>2.2 Docker Port Mapping</strong></p>
+                        <p>Ensure <code>docker-compose.yml</code> exposes port 15514:</p>
+                        <div class="code-block">
+                            <span class="code-badge">YAML</span>
+<pre><code>services:
+  wazuh.manager:
+    ports:
+      - "15514:15514/udp"</code></pre>
+                        </div>
+
+                        <p><strong>2.3 Host Firewall (UFW)</strong></p>
+                        <div class="code-block">
+                            <span class="code-badge">BASH</span>
+<pre><code>sudo ufw allow 15514/udp</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-header">
+                        <div class="step-number">3</div>
+                        <h2 class="step-title">Custom Decoders</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>File Location: <span class="tech-prop">/var/ossec/etc/decoders/sophos_decoders.xml</span></p>
+                        <div class="code-block">
+                            <span class="code-badge">XML</span>
+<pre><code>&lt;decoder name="sophos-firewall"&gt;
+  &lt;prematch&gt;device_name="SFW"&lt;/prematch&gt;
+&lt;/decoder&gt;
+&lt;decoder name="sophos-firewall-fields"&gt;
+  &lt;parent&gt;sophos-firewall&lt;/parent&gt;
+  &lt;regex&gt;log_type="([^"]+)"&lt;/regex&gt;
+  &lt;order&gt;log_type&lt;/order&gt;
+&lt;/decoder&gt;
+&lt;decoder name="sophos-firewall-subtype"&gt;
+  &lt;parent&gt;sophos-firewall&lt;/parent&gt;
+  &lt;regex&gt;log_subtype="([^"]+)"&lt;/regex&gt;
+  &lt;order&gt;log_subtype&lt;/order&gt;
+&lt;/decoder&gt;
+&lt;decoder name="sophos-firewall-srcip"&gt;
+  &lt;parent&gt;sophos-firewall&lt;/parent&gt;
+  &lt;regex&gt;src_ip="([^"]+)"&lt;/regex&gt;
+  &lt;order&gt;srcip&lt;/order&gt;
+&lt;/decoder&gt;
+&lt;decoder name="sophos-firewall-dstip"&gt;
+  &lt;parent&gt;sophos-firewall&lt;/parent&gt;
+  &lt;regex&gt;dst_ip="([^"]+)"&lt;/regex&gt;
+  &lt;order&gt;dstip&lt;/order&gt;
+&lt;/decoder&gt;</code></pre>
+                        </div>
+                        <div class="note">
+                            <span class="material-icons-outlined">info</span>
+                            <span>Sophos logs use key="value" format. The regex <code>[^"]+</code> matches any characters except quotes.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-header">
+                        <div class="step-number">4</div>
+                        <h2 class="step-title">Custom Rules</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>File Location: <span class="tech-prop">/var/ossec/etc/rules/sophos_rules.xml</span></p>
+                        <div class="code-block">
+                            <span class="code-badge">XML</span>
+<pre><code>&lt;group name="sophos,firewall,"&gt;
+  &lt;rule id="100100" level="3"&gt;
+    &lt;decoded_as&gt;sophos-firewall&lt;/decoded_as&gt;
+    &lt;description&gt;Sophos Firewall: Generic event&lt;/description&gt;
+  &lt;/rule&gt;
+  &lt;rule id="100101" level="3"&gt;
+    &lt;if_sid&gt;100100&lt;/if_sid&gt;
+    &lt;field name="log_subtype"&gt;Allowed&lt;/field&gt;
+    &lt;description&gt;Sophos Firewall: Traffic Allowed&lt;/description&gt;
+  &lt;/rule&gt;
+  &lt;rule id="100102" level="6"&gt;
+    &lt;if_sid&gt;100100&lt;/if_sid&gt;
+    &lt;field name="log_subtype"&gt;Denied&lt;/field&gt;
+    &lt;description&gt;Sophos Firewall: Traffic Denied&lt;/description&gt;
+  &lt;/rule&gt;
+  &lt;rule id="100103" level="10"&gt;
+    &lt;if_sid&gt;100100&lt;/if_sid&gt;
+    &lt;field name="log_type"&gt;IPS&lt;/field&gt;
+    &lt;description&gt;Sophos Firewall: IPS Event&lt;/description&gt;
+  &lt;/rule&gt;
+&lt;/group&gt;</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-header">
+                        <div class="step-number">5</div>
+                        <h2 class="step-title">Load Decoders & Restart</h2>
+                    </div>
+                    <div class="step-content">
+                        <p><strong>Important:</strong> Custom decoders are not loaded by default. You must edit the <code>&lt;ruleset&gt;</code> section in <code>ossec.conf</code>.</p>
+                        <div class="code-block">
+                            <span class="code-badge">XML</span>
+<pre><code>&lt;ruleset&gt;
+  &lt;decoder_dir&gt;ruleset/decoders&lt;/decoder_dir&gt;
+  &lt;decoder_dir&gt;etc/decoders&lt;/decoder_dir&gt;  &lt;!-- ADD THIS --&gt;
+  &lt;rule_dir&gt;ruleset/rules&lt;/rule_dir&gt;
+  &lt;rule_dir&gt;etc/rules&lt;/rule_dir&gt;           &lt;!-- ADD THIS --&gt;
+  &lt;!-- ... other config ... --&gt;
+&lt;/ruleset&gt;</code></pre>
+                        </div>
+                        <p><strong>Restart Manager:</strong></p>
+                        <div class="code-block">
+                            <span class="code-badge">BASH</span>
+<pre><code>docker exec single-node_wazuh.manager_1 /var/ossec/bin/wazuh-control restart</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="resources-section">
+                <h2 class="section-title">
+                    <span class="material-icons-outlined">build</span>
+                    Troubleshooting Guide
+                </h2>
+                <div class="steps-container">
+                    <div class="step">
+                        <div class="step-header">
+                            <span class="material-icons-outlined" style="color: #ef4444; font-size: 24px;">error_outline</span>
+                            <h2 class="step-title">Problem 1: Syslog Listener Not Starting</h2>
+                        </div>
+                        <div class="step-content">
+                            <p><strong>Symptom:</strong> No logs received, netstat shows nothing on port 15514.</p>
+                            <p><strong>Check:</strong></p>
+                            <div class="code-block">
+<pre><code>docker exec single-node_wazuh.manager_1 grep -E 'Listening.*15514|1501' /var/ossec/logs/ossec.log</code></pre>
+                            </div>
+                            <p><strong>Solution:</strong> Ensure the <code>&lt;allowed-ips&gt;</code> tag contains the correct firewall IP in the remote block.</p>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-header">
+                            <span class="material-icons-outlined" style="color: #ef4444; font-size: 24px;">error_outline</span>
+                            <h2 class="step-title">Problem 2: Logs in Archives but No Alerts</h2>
+                        </div>
+                        <div class="step-content">
+                            <p><strong>Symptom:</strong> Logs appear in archives.json but have "decoder":{}.</p>
+                            <p><strong>Check:</strong></p>
+                            <div class="code-block">
+<pre><code>docker exec single-node_wazuh.manager_1 grep '172.168.10.1' /var/ossec/logs/archives/archives.json | tail -1</code></pre>
+                            </div>
+                            <p><strong>Solution:</strong> Add <code>&lt;decoder_dir&gt;etc/decoders&lt;/decoder_dir&gt;</code> to ossec.conf to ensure custom decoders are loaded.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-header">
+                            <span class="material-icons-outlined" style="color: #ef4444; font-size: 24px;">error_outline</span>
+                            <h2 class="step-title">Problem 3: Packets Not Reaching Container</h2>
+                        </div>
+                        <div class="step-content">
+                            <p><strong>Symptom:</strong> tcpdump on host shows packets but container doesn't receive them.</p>
+                            <p><strong>Check:</strong> Run tcpdump inside the container.</p>
+                            <div class="code-block">
+<pre><code>docker exec single-node_wazuh.manager_1 tcpdump -i any port 15514 -c 5</code></pre>
+                            </div>
+                            <p><strong>Causes:</strong> Docker port not mapped in docker-compose, or UFW/Firewall blocking traffic.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="resources-section">
+                <h2 class="section-title">
+                    <span class="material-icons-outlined">verified</span>
+                    Verification Commands
+                </h2>
+                <div class="resource-grid">
+                    <div class="resource-card">
+                        <h3>Check Listener</h3>
+                        <div class="code-block" style="text-align: left; padding: 12px; margin-bottom: 0;">
+<pre><code>grep 'Listening.*15514' /var/ossec/logs/ossec.log</code></pre>
+                        </div>
+                    </div>
+                    <div class="resource-card">
+                        <h3>Count Alerts</h3>
+                        <div class="code-block" style="text-align: left; padding: 12px; margin-bottom: 0;">
+<pre><code>grep 'Sophos Firewall' /var/ossec/logs/alerts/alerts.json | wc -l</code></pre>
+                        </div>
+                    </div>
+                    <div class="resource-card">
+                        <h3>View Alert Data</h3>
+                        <div class="code-block" style="text-align: left; padding: 12px; margin-bottom: 0;">
+<pre><code>grep 'Sophos' alerts.json | tail -1 | jq .</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <p style="text-align: center; margin-top: 48px; color: var(--text-tertiary); font-size: 0.875rem;">Last Updated: February 2026</p>
         </div>
     </main>
 
