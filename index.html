@@ -225,6 +225,23 @@
             color: #991b1b;
         }
 
+        .alert-box.info {
+            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+            border-color: #818cf8;
+        }
+
+        .alert-box.info .alert-icon {
+            background: var(--primary);
+        }
+
+        .alert-box.info .alert-content strong {
+            color: #3730a3;
+        }
+
+        .alert-box.info .alert-content p {
+            color: #4338ca;
+        }
+
         .alert-icon {
             width: 40px;
             height: 40px;
@@ -803,6 +820,11 @@
             <button class="nav-tab" onclick="showTab('wazuh')">
                 <span class="material-icons-outlined">security</span>
                 Wazuh Integration
+            </button>
+            <!-- NEW TAB ADDED HERE -->
+            <button class="nav-tab" onclick="showTab('asset')">
+                <span class="material-icons-outlined">inventory_2</span>
+                Asset Management
             </button>
         </nav>
     </div>
@@ -1512,6 +1534,168 @@
             </div>
             
             <p style="text-align: center; margin-top: 48px; color: var(--text-tertiary); font-size: 0.875rem;">Last Updated: February 2026</p>
+        </div>
+
+        <!-- NEW ASSET MANAGEMENT TAB CONTENT -->
+        <div id="asset-tab" class="tab-content">
+            <div class="page-header">
+                <h1 class="page-title">Asset Management Tool</h1>
+                <p class="page-description">Beginner tutorial for tracking company laptops, software, and accessories</p>
+            </div>
+
+            <div class="alert-box info">
+                <div class="alert-icon">
+                    <span class="material-icons-outlined">info</span>
+                </div>
+                <div class="alert-content">
+                    <strong>Welcome!</strong>
+                    <p>This guide will explain how to use the system step-by-step in simple English. The main goal of this system is to help you track your company's laptops, software, and accessories, and see which employee has what.</p>
+                </div>
+            </div>
+
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-header">
+                        <div class="step-number">1</div>
+                        <h2 class="step-title">Getting Started and Dashboard</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>When you open the tool, you will see a Login page. Enter your email and password.</p>
+                        <p>Once you log in, you will be on the <strong>Dashboard</strong>. The dashboard gives you a quick summary of everything you own. You can see how many laptops are in use, how many are sitting in storage (available), and important numbers about your software licenses.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-header">
+                        <div class="step-number">2</div>
+                        <h2 class="step-title">Managing Employees (Users Page)</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Before you can give a laptop to an employee, that employee must exist in the system. Go to the <strong>Users</strong> section from the side menu.</p>
+                        
+                        <p><strong>Adding one employee manually:</strong></p>
+                        <ul>
+                            <li>Click the <strong>+ Add User</strong> button.</li>
+                            <li>Fill in their details like Name, Email, Employee ID, and Department.</li>
+                            <li>Click <strong>Save</strong>.</li>
+                        </ul>
+
+                        <p><strong>Adding many employees at once:</strong></p>
+                        <ul>
+                            <li>Click <strong>Template</strong> to download a sample spreadsheet.</li>
+                            <li>Fill the spreadsheet with your employee data.</li>
+                            <li>Click <strong>Excel Import</strong> and upload the file. The system will automatically create profiles for everyone.</li>
+                        </ul>
+
+                        <div class="note">
+                            <span class="material-icons-outlined">admin_panel_settings</span>
+                            <span><strong>Admin Rights:</strong> An Admin is someone who has full control. They can delete assets and make other people admins. If you are an Admin, you will see a small shield icon next to your Role. You can give admin rights to another user by clicking the Shield button under the Actions column.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-header">
+                        <div class="step-number">3</div>
+                        <h2 class="step-title">Managing Hardware Devices (Assets Page)</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>This is where you track things like laptops, monitors, or phones.</p>
+
+                        <p><strong>Adding a new device:</strong></p>
+                        <ul>
+                            <li>Go to the <strong>Asset Inventory</strong> page.</li>
+                            <li>Click <strong>+ Add Asset</strong>.</li>
+                            <li>Write down its Asset Tag (a unique ID), Brand, Model, Serial Number, and Status.</li>
+                            <li>Set the status to "available" if it is ready to be used.</li>
+                        </ul>
+
+                        <p><strong>Assigning a device to an employee:</strong></p>
+                        <ul>
+                            <li>Find an "available" device in the list.</li>
+                            <li>Under the Actions column, click <strong>Assign</strong>.</li>
+                            <li>A popup will appear. Select the employee's name from the list.</li>
+                            <li>Click <strong>Save</strong>. The device will now move to "assigned" status.</li>
+                        </ul>
+
+                        <p><strong>Taking a device back (Returning):</strong></p>
+                        <ul>
+                            <li>When an employee leaves or gives a device back, find that device in the list.</li>
+                            <li>Click <strong>Return</strong>.</li>
+                            <li>The device becomes "available" again for the next person.</li>
+                        </ul>
+
+                        <div class="note" style="background: #fee2e2; color: #991b1b; border: 1px solid #fecaca;">
+                            <span class="material-icons-outlined" style="color: #ef4444;">delete_forever</span>
+                            <span><strong>Deleting a device:</strong> If a device is lost, completely broken, or sold, an Admin can completely remove it from the system by clicking the Trashcan (Delete) button. Normal users will not see this button.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-header">
+                        <div class="step-number">4</div>
+                        <h2 class="step-title">Managing Software Licenses (Software Page)</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>You can track paid tools like Microsoft 365, Adobe, or other software.</p>
+                        <ul>
+                            <li>Go to the <strong>Software Licenses</strong> page.</li>
+                            <li>Click <strong>+ Add Software</strong>.</li>
+                            <li>Type in the software name, purchase date, cost, and how many total licenses you bought (for example, 50 licenses).</li>
+                            <li>Once added, you can click <strong>Assign</strong> to link a license to a specific employee.</li>
+                            <li>The system will track how many licenses you have left so you never buy too many by mistake.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-header">
+                        <div class="step-number">5</div>
+                        <h2 class="step-title">Managing Accessories</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Accessories are smaller items that belong to employees but don't need a unique Asset Tag (like keyboards, mouse, or laptop bags).</p>
+                        <ul>
+                            <li>Go to the <strong>Accessories</strong> page.</li>
+                            <li>Click <strong>+ Add Accessory</strong>.</li>
+                            <li>Choose what kind of item it is.</li>
+                            <li>Directly select which employee the accessory is given to.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="resources-section">
+                <h2 class="section-title">
+                    <span class="material-icons-outlined">analytics</span>
+                    Checking History and Reports
+                </h2>
+                <p style="color: var(--text-secondary); margin-bottom: 24px;">When many people use this tool, it is important to know who changed what.</p>
+                <div class="resource-grid">
+                    <div class="resource-card">
+                        <div class="resource-icon" style="background: linear-gradient(135deg, var(--secondary) 0%, #0284c7 100%);">
+                            <span class="material-icons-outlined">receipt_long</span>
+                        </div>
+                        <h3>Transactions Page</h3>
+                        <p>This page acts like a receipt book. Every time a laptop is given to someone or returned, a record is automatically saved here. You can see the exact date and time the transfer happened.</p>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-icon" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                            <span class="material-icons-outlined">history</span>
+                        </div>
+                        <h3>Audit Logs Page</h3>
+                        <p>This tracks system actions. If someone changes an employee's name, deletes an asset, or makes someone an admin, the Audit Log records exactly what the old value was, what the new value is, and who made the change.</p>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-icon" style="background: linear-gradient(135deg, var(--accent) 0%, #059669 100%);">
+                            <span class="material-icons-outlined">summarize</span>
+                        </div>
+                        <h3>Reports Page</h3>
+                        <p>Group information together. For example, see exactly how many laptops a specific department has. Click the download button to export these summaries into an Excel file for your own records.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
